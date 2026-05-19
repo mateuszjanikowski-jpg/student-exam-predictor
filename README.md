@@ -18,8 +18,14 @@ Machine learning web application built with Streamlit and Docker.
 - Docker
 - Git & GitHub
 - GitHub Actions (CI/CD)
-- Microsoft Azure (Cloud Deployment)
+- Render (Cloud Deployment)
 - Terraform (Infrastructure as Code)
+
+## Live Demo
+
+Application deployed on Render:
+
+https://student-exam-predictor-v694.onrender.com
 
 ## Run locally
 
