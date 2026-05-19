@@ -13,13 +13,9 @@ def load_model():
 
 
 def prepare_input(study_hours, attendance, previous_score, sleep_hours, stress_level):
-    return np.array([[
-        study_hours,
-        attendance,
-        previous_score,
-        sleep_hours,
-        stress_level
-    ]])
+    return np.array(
+        [[study_hours, attendance, previous_score, sleep_hours, stress_level]]
+    )
 
 
 def get_risk_level(pass_probability):
@@ -32,9 +28,7 @@ def get_risk_level(pass_probability):
 
 
 st.set_page_config(
-    page_title="Student Exam Success Predictor",
-    page_icon="🎓",
-    layout="centered"
+    page_title="Student Exam Success Predictor", page_icon="🎓", layout="centered"
 )
 
 model = load_model()
@@ -57,7 +51,7 @@ with col1:
         min_value=0,
         max_value=12,
         value=5,
-        help="Average number of hours spent studying per day."
+        help="Average number of hours spent studying per day.",
     )
 
     attendance = st.slider(
@@ -65,7 +59,7 @@ with col1:
         min_value=0,
         max_value=100,
         value=75,
-        help="Percentage of attended classes."
+        help="Percentage of attended classes.",
     )
 
     previous_score = st.slider(
@@ -73,7 +67,7 @@ with col1:
         min_value=0,
         max_value=100,
         value=60,
-        help="Score obtained in a previous exam or assessment."
+        help="Score obtained in a previous exam or assessment.",
     )
 
 with col2:
@@ -82,7 +76,7 @@ with col2:
         min_value=0,
         max_value=12,
         value=7,
-        help="Average number of hours of sleep per night."
+        help="Average number of hours of sleep per night.",
     )
 
     stress_level = st.slider(
@@ -90,18 +84,14 @@ with col2:
         min_value=1,
         max_value=10,
         value=5,
-        help="Self-reported stress level, where 1 is very low and 10 is very high."
+        help="Self-reported stress level, where 1 is very low and 10 is very high.",
     )
 
 st.divider()
 
 if st.button("Predict exam result", type="primary", use_container_width=True):
     input_data = prepare_input(
-        study_hours,
-        attendance,
-        previous_score,
-        sleep_hours,
-        stress_level
+        study_hours, attendance, previous_score, sleep_hours, stress_level
     )
 
     prediction = model.predict(input_data)[0]
@@ -130,22 +120,24 @@ if st.button("Predict exam result", type="primary", use_container_width=True):
 
     st.subheader("Input summary")
 
-    summary_df = pd.DataFrame({
-        "Feature": [
-            "Study hours per day",
-            "Attendance",
-            "Previous exam score",
-            "Sleep hours per night",
-            "Stress level"
-        ],
-        "Value": [
-            study_hours,
-            f"{attendance}%",
-            previous_score,
-            sleep_hours,
-            stress_level
-        ]
-    })
+    summary_df = pd.DataFrame(
+        {
+            "Feature": [
+                "Study hours per day",
+                "Attendance",
+                "Previous exam score",
+                "Sleep hours per night",
+                "Stress level",
+            ],
+            "Value": [
+                study_hours,
+                f"{attendance}%",
+                previous_score,
+                sleep_hours,
+                stress_level,
+            ],
+        }
+    )
 
     st.dataframe(summary_df, use_container_width=True, hide_index=True)
 

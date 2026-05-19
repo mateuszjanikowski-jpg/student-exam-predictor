@@ -32,14 +32,16 @@ def generate_dataset(n_samples: int) -> pd.DataFrame:
 
     passed = (score > 7.5).astype(int)
 
-    return pd.DataFrame({
-        "study_hours": study_hours,
-        "attendance": attendance,
-        "previous_score": previous_score,
-        "sleep_hours": sleep_hours,
-        "stress_level": stress_level,
-        "passed": passed
-    })
+    return pd.DataFrame(
+        {
+            "study_hours": study_hours,
+            "attendance": attendance,
+            "previous_score": previous_score,
+            "sleep_hours": sleep_hours,
+            "stress_level": stress_level,
+            "passed": passed,
+        }
+    )
 
 
 def main():
@@ -49,27 +51,17 @@ def main():
     df = generate_dataset(N_SAMPLES)
     df.to_csv("data/students.csv", index=False)
 
-    X = df[[
-        "study_hours",
-        "attendance",
-        "previous_score",
-        "sleep_hours",
-        "stress_level"
-    ]]
+    X = df[
+        ["study_hours", "attendance", "previous_score", "sleep_hours", "stress_level"]
+    ]
     y = df["passed"]
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=0.25,
-        random_state=RANDOM_STATE,
-        stratify=y
+        X, y, test_size=0.25, random_state=RANDOM_STATE, stratify=y
     )
 
     model = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=6,
-        random_state=RANDOM_STATE
+        n_estimators=100, max_depth=6, random_state=RANDOM_STATE
     )
 
     model.fit(X_train, y_train)
